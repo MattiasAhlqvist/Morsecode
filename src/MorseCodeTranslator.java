@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MorseCodeTranslator {
-    private HashMap<String, Character> morseCharacters = new HashMap<>(){
+    private static HashMap<String, Character> morseCharacters = new HashMap<>(){
         {
             put("*_", 'A');
             put("_***", 'B');
@@ -48,25 +48,31 @@ public class MorseCodeTranslator {
         }
     };
 
-    public void translateToEnglish(String s){
+    public static String translateToEnglish(String s){
         String[] parts = s.split(" ");
         StringBuilder sb = new StringBuilder();
         for(String letter : parts){
-            sb.append(morseCharacters.get(letter));
+            Character englishChar = morseCharacters.get(letter);
+            if (englishChar == null) {
+                return null;
+            }
+            sb.append(englishChar);
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
+        return sb.toString();
     }
 
-    public String translateToMorse(String s){
+    public static String translateToMorse(String s){
+        s = s.toUpperCase(); //Felhantering
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < s.length(); i++){
             sb.append(findMorseCode(s.charAt(i)) + " ");
         }
-        System.out.println(sb.toString());
-        return null;
+        System.out.println(sb);
+        return sb.toString();
     }
 
-    private String findMorseCode(char ch){
+    private static String findMorseCode(char ch){
         for(Map.Entry<String, Character> entry : morseCharacters.entrySet()){
             if(entry.getValue().equals(ch)) return entry.getKey();
         }
