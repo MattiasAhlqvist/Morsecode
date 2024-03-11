@@ -45,6 +45,7 @@ public class MorseCodeTranslator {
             put("*_*_*_", '.');
             put("__**__", ',');
             put("**__**", '?');
+            put(" ", ' ');
         }
     };
 
@@ -66,7 +67,13 @@ public class MorseCodeTranslator {
         s = s.toUpperCase(); //Felhantering
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < s.length(); i++){
-            sb.append(findMorseCode(s.charAt(i)) + " ");
+            String morseString = findMorseCode(s.charAt(i));
+            if (morseString == null) {
+                return null;
+            }
+
+            sb.append(morseString);
+            sb.append(" ");
         }
         System.out.println(sb);
         return sb.toString();
